@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Categories - Ingenious Mart</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f8f8;
+      color: #004d4d;
+      margin: 0; padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    nav {
+      background-color: #008080;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 8px rgba(0, 128, 128, 0.4);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav .logo {
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.8rem;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      margin: 0;
+    }
+    nav ul li a {
+      color: #e0f2f1;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      border-bottom: 3px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+    nav ul li a:hover,
+    nav ul li a.active {
+      border-bottom-color: #ff6f61;
+      color: #ff6f61;
+    }
+
+    header {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      font-weight: 600;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 0.5rem;
+      color: #008080;
+    }
+    header p {
+      font-weight: 400;
+      font-size: 1.2rem;
+      color: #005050;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      user-select: none;
+    }
+
+    .category-grid {
+      max-width: 1100px;
+      margin: 0 auto 4rem auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 2rem;
+      padding: 0 1.5rem;
+    }
+
+    .category-card {
+      background: #ffffffdd;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      color: #004d4d;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .category-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+    .category-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-bottom: 3px solid #008080;
+      user-select: none;
+    }
+    .category-card h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 1rem;
+      color: #008080;
+    }
+    .category-card p {
+      flex-grow: 1;
+      margin: 0 1rem 1.5rem;
+      font-weight: 500;
+      color: #005050;
+      user-select: none;
+    }
+
+    footer {
+      background-color: #008080;
+      color: #e0f2f1;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-weight: 500;
+      font-size: 1rem;
+      letter-spacing: 0.6px;
+      user-select: none;
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Ingenious Mart</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="categories.html" class="active">Categories</a></li>
+      <li><a href="#">Best Deals</a></li>
+      <li><a href="cart.html">Cart</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>Shop by Categories</h1>
+    <p>Explore a wide range of products from multiple markets in each category.</p>
+  </header>
+
+  <section class="category-grid">
+    <a href="fashion.html" class="category-card" data-aos="fade-up" data-aos-delay="100">
+      <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80" alt="Fashion" />
+      <h3>Fashion</h3>
+      <p>Clothing, footwear, and trendy accessories.</p>
+    </a>
+
+    <a href="electronics.html" class="category-card" data-aos="fade-up" data-aos-delay="200">
+      <img src="https://th.bing.com/th/id/OIP.tgOFkysnfdqZNrXk-NPy4wHaEa?w=273&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7" alt="Electronics" />
+      <h3>Electronics</h3>
+      <p>Latest TVs, refrigerators, and gadgets.</p>
+    </a>
+
+    <a href="cosmetics.html" class="category-card" data-aos="fade-up" data-aos-delay="300">
+      <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=400&q=80" alt="Cosmetics" />
+      <h3>Cosmetics</h3>
+      <p>Lipsticks, eyeshadows, and beauty essentials.</p>
+    </a>
+
+    <a href="toys.html" class="category-card" data-aos="fade-up" data-aos-delay="400">
+      <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=400&q=80" alt="Toys" />
+      <h3>Toys</h3>
+      <p>Soft toys and fun playthings for kids.</p>
+    </a>
+
+    <a href="kitchen.html" class="category-card" data-aos="fade-up" data-aos-delay="500">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80" alt="Kitchen" />
+      <h3>Kitchen</h3>
+      <p>Cookware, utensils, and dining essentials.</p>
+    </a>
+
+    <a href="footwear.html" class="category-card" data-aos="fade-up" data-aos-delay="600">
+      <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?auto=format&fit=crop&w=400&q=80" alt="Footwear" />
+      <h3>Footwear</h3>
+      <p>Slippers, sandals, and comfy shoes.</p>
+    </a>
+  </section>
+
+  <footer>
+    &copy; 2025 Ingenious Mart. All rights reserved.
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      once: true,
+    });
+  </script>
+</body>
+</html>

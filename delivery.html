@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Delivery Details - Ingenious Mart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset & basics */
+    * {
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #fce1f5, #f7f0fc);
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px;
+      overflow-x: hidden;
+    }
+    h1 {
+      font-weight: 600;
+      color: #c82365;
+      margin-bottom: 30px;
+      text-align: center;
+      letter-spacing: 1.1px;
+      animation: fadeInDown 0.8s ease forwards;
+    }
+    form {
+      background: white;
+      max-width: 600px;
+      width: 100%;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(200, 60, 110, 0.2);
+      animation: fadeInUp 0.8s ease forwards;
+      position: relative;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 20px;
+      display: block;
+      color: #8a2f57;
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 14px 18px;
+      margin-top: 8px;
+      border-radius: 10px;
+      border: 2px solid #e4d7e0;
+      font-size: 1rem;
+      font-weight: 400;
+      font-family: 'Poppins', sans-serif;
+      color: #4a2c45;
+      outline-offset: 3px;
+      outline-color: transparent;
+      resize: vertical;
+      box-shadow: inset 1px 1px 5px #f3e7f7;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    input[type="date"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #c82365;
+      outline-color: #d94f8b;
+      box-shadow: 0 0 8px 2px #d94f8baa;
+      background: #fff0f5;
+    }
+
+    /* Checkbox style */
+    label input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+      vertical-align: middle;
+      cursor: pointer;
+    }
+    label.terms {
+      margin-top: 30px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #6b465a;
+      user-select: none;
+    }
+    label.terms a {
+      color: #c82365;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    label.terms a:hover {
+      text-decoration: underline;
+    }
+
+    button {
+      margin-top: 35px;
+      width: 100%;
+      padding: 16px 0;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #c82365, #d94f8b);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      box-shadow: 0 5px 15px #c8236555;
+      text-transform: uppercase;
+      user-select: none;
+      transition: all 0.4s ease;
+    }
+    button:hover {
+      background: linear-gradient(135deg, #d94f8b, #c82365);
+      box-shadow: 0 7px 25px #d94f8baa;
+      transform: translateY(-3px);
+    }
+
+    /* Payment icons */
+    .payment-options {
+      margin-top: 18px;
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      user-select: none;
+    }
+    .payment-options img {
+      height: 55px;
+      width: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(200, 60, 110, 0.15);
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+      object-fit: contain;
+      background: white;
+      padding: 6px;
+    }
+    .payment-options img:hover {
+      border-color: #c82365;
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px #c8236555;
+    }
+    .payment-options img.selected {
+      border-color: #c82365;
+      box-shadow: 0 6px 20px #c8236555;
+      transform: scale(1.1);
+    }
+
+    /* Summary */
+    .summary {
+      max-width: 600px;
+      margin: 30px auto 0;
+      background: #fff0f5;
+      padding: 25px 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(216, 79, 139, 0.25);
+      color: #661a3e;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      display: none;
+      animation: fadeIn 0.6s ease forwards;
+    }
+    .summary h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.1em;
+    }
+    .summary p {
+      margin: 10px 0;
+      line-height: 1.4;
+    }
+    #finalConfirm {
+      margin-top: 25px;
+      background: #b71e53;
+      width: 100%;
+      padding: 14px 0;
+      border-radius: 12px;
+      border: none;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 5px 15px #b71e5377;
+      user-select: none;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+    #finalConfirm:hover {
+      background: #d94f8b;
+      box-shadow: 0 8px 20px #d94f8baa;
+      transform: translateY(-3px);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    /* Responsive */
+    @media(max-width: 640px) {
+      form {
+        padding: 25px 20px;
+      }
+      .payment-options {
+        gap: 15px;
+      }
+      .payment-options img {
+        height: 45px;
+        padding: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- Delivery Details Header -->
+<header class="page-header">
+  <h1>Delivery Details</h1>
+  <p>Please fill out your delivery information and payment preferences below.</p>
+</header>
+
+<form id="deliveryForm" autocomplete="off">
+  <label for="fullname">Full Name:</label>
+  <input type="text" id="fullname" required placeholder="Your full name" />
+
+  <label for="email">Email Address:</label>
+  <input type="email" id="email" placeholder="you@example.com" required />
+
+  <label for="address">Address:</label>
+  <textarea id="address" rows="3" required minlength="10" placeholder="Street, city, ZIP..."></textarea>
+
+  <label for="phone">Phone Number:</label>
+  <input type="tel" id="phone" pattern="[0-9]{10}" required placeholder="10 digit number" />
+
+  <label for="altPhone">Alternate Contact Number:</label>
+  <input type="tel" id="altPhone" pattern="[0-9]{10}" placeholder="Optional" />
+
+  <label for="deliveryDate">Preferred Delivery Date:</label>
+  <input type="date" id="deliveryDate" required min="" />
+
+  <label for="deliveryTime">Preferred Delivery Time:</label>
+  <select id="deliveryTime" required>
+    <option value="" disabled selected>Select delivery time</option>
+    <option value="Morning (8 AM - 12 PM)">Morning (8 AM - 12 PM)</option>
+    <option value="Afternoon (12 PM - 4 PM)">Afternoon (12 PM - 4 PM)</option>
+    <option value="Evening (4 PM - 8 PM)">Evening (4 PM - 8 PM)</option>
+  </select>
+
+  <label>
+    <input type="checkbox" id="deliverSunday" />
+    Deliver on Sunday
+  </label>
+
+  <label for="paymentMethod">Payment Method:</label>
+  <select id="paymentMethod" required>
+    <option value="" disabled selected>Select payment method</option>
+    <option value="Cash on Delivery">Cash on Delivery</option>
+    <option value="Online Payment">Online Payment</option>
+  </select>
+
+  <div class="payment-options">
+    <img src="https://th.bing.com/th/id/OIP.ZyjY9hj_UxgzxpvYMFaTdgHaHa?w=169&h=180&c=7&r=0&o=5&cb=iwc2&dpr=1.5&pid=1.7" alt="GPay" id="gpay" title="Pay with GPay" />
+    <img src="https://d3pc1xvrcw35tl.cloudfront.net/images/1200x900/payment-app-phone-pay-has-launched-an-aggregator-service-know-here-everything_2023061030257.jpg" alt="PhonePe" id="phonepe" title="Pay with PhonePe" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Paytm_Logo.svg/1200px-Paytm_Logo.svg.png" alt="Paytm" id="paytm" title="Pay with Paytm" />
+  </div>
+
+  <label class="terms">
+    <input type="checkbox" id="terms" required />
+    I accept the <a href="#">Terms and Conditions</a>
+  </label>
+
+  <button type="submit">Place Order</button>
+</form>
+
+<div class="summary" id="summary"></div>
+
+<script>
+  // Set min date as today for deliveryDate input
+  const deliveryDateInput = document.getElementById('deliveryDate');
+  const today = new Date().toISOString().split('T')[0];
+  deliveryDateInput.min = today;
+
+  // Payment icons selection effect
+  const paymentIcons = document.querySelectorAll('.payment-options img');
+  const paymentMethodSelect = document.getElementById('paymentMethod');
+
+  paymentIcons.forEach(icon => {
+    icon.addEventListener('click', () => {
+      paymentIcons.forEach(i => i.classList.remove('selected'));
+      icon.classList.add('selected');
+      paymentMethodSelect.value = 'Online Payment';
+    });
+  });
+
+  // Form submission
+  const form = document.getElementById('deliveryForm');
+  const summary = document.getElementById('summary');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const fullname = document.getElementById('fullname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const altPhone = document.getElementById('altPhone').value.trim() || 'N/A';
+    const deliveryDate = deliveryDateInput.value;
+    const deliveryTime = document.getElementById('deliveryTime').value;
+    const deliverSunday = document.getElementById('deliverSunday').checked ? 'Yes' : 'No';
+    const paymentMethod = paymentMethodSelect.value;
+
+    // Show summary
+    summary.style.display = 'block';
+    summary.innerHTML = `
+      <h2>Order Summary</h2>
+      <p><strong>Name:</strong> ${fullname}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Address:</strong> ${address}</p>
+      <p><strong>Phone Number:</strong> ${phone}</p>
+      <p><strong>Alternate Number:</strong> ${altPhone}</p>
+      <p><strong>Delivery Date:</strong> ${deliveryDate}</p>
+      <p><strong>Delivery Time:</strong> ${deliveryTime}</p>
+      <p><strong>Deliver on Sunday:</strong> ${deliverSunday}</p>
+      <p><strong>Payment Method:</strong> ${paymentMethod}</p>
+      <button id="finalConfirm">Confirm Order</button>
+    `;
+
+    // Scroll summary into view smoothly
+    summary.scrollIntoView({ behavior: 'smooth' });
+
+    document.getElementById('finalConfirm').addEventListener('click', () => {
+      alert('Thank you for your order! Your delivery details have been saved.');
+      form.reset();
+      summary.style.display = 'none';
+      paymentIcons.forEach(i => i.classList.remove('selected'));
+    });
+window.location.href = "thankyou.html";
+  });
+</script>

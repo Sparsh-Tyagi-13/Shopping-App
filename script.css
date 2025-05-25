@@ -1,0 +1,21 @@
+<!-- script.js -->
+const ctx = document.getElementById('behaviorChart').getContext('2d');
+new Chart(ctx, {
+  type: 'pie',
+  data: {
+    labels: ['Search', 'View Product', 'Add to Cart', 'Checkout'],
+    datasets: [{
+      label: 'Consumer Actions',
+      data: [40, 25, 20, 15],
+      backgroundColor: ['#4CAF50', '#2196F3', '#FFC107', '#F44336']
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom' }
+    }
+  }
+});
+
+/* style.css remains unchanged */

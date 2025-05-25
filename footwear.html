@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Footwear Collection - Ingenious Mart</title>
+<style>
+  /* Reset and base */
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff0f5; /* light pink background */
+    color: #3a0f2a; /* deep pinkish text */
+  }
+  h1 {
+    background-color: #c9184a;
+    color: white;
+    padding: 20px 0;
+    margin: 0;
+    font-weight: 700;
+    text-align: center;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 8px rgba(201, 24, 74, 0.4);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  /* Back button */
+  #backButton {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(45deg, #c9184a, #ff4d6d);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(201, 24, 74, 0.5);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    width: max-content;
+  }
+  #backButton:hover {
+    background: linear-gradient(45deg, #ff4d6d, #c9184a);
+    box-shadow: 0 7px 20px rgba(255, 77, 109, 0.6);
+  }
+
+  /* Cart button - same style as back button */
+  .cart-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(45deg, #c9184a, #ff4d6d);
+    color: white;
+    padding: 14px 30px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(201, 24, 74, 0.6);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1000;
+    user-select: none;
+  }
+  .cart-btn:hover {
+    background: linear-gradient(45deg, #ff4d6d, #c9184a);
+    box-shadow: 0 8px 26px rgba(255, 77, 109, 0.7);
+  }
+
+  /* Grid container for product cards */
+  .grid-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+
+  /* Product Card Style - matching buttons with pill shape and shadows */
+  .product-card {
+    background: white;
+    border-radius: 50px;
+    padding: 20px 24px;
+    box-shadow: 0 10px 20px rgba(201, 24, 74, 0.12);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .product-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 16px 32px rgba(255, 77, 109, 0.3);
+  }
+
+  /* Product image */
+  .product-card img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    border-radius: 50%;
+    margin-bottom: 16px;
+    box-shadow: 0 6px 12px rgba(201, 24, 74, 0.15);
+  }
+
+  /* Product name */
+  .product-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #8b0049;
+  }
+
+  /* Price & rating */
+  .price {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #c9184a;
+    margin-bottom: 6px;
+  }
+  .rating {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ff4d6d;
+    margin-bottom: 12px;
+  }
+
+  /* Suggested marketplace label */
+  .suggested {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #ff6f91;
+    margin-bottom: 14px;
+  }
+
+  /* Marketplace selector */
+  select.marketplace {
+    padding: 8px 12px;
+    border-radius: 50px;
+    border: 2px solid #ff4d6d;
+    background: #fff0f5;
+    font-weight: 600;
+    color: #8b0049;
+    outline: none;
+    margin-bottom: 16px;
+    cursor: pointer;
+    width: 80%;
+    transition: border-color 0.3s ease;
+  }
+  select.marketplace:hover, select.marketplace:focus {
+    border-color: #c9184a;
+  }
+
+  /* Add to Cart button */
+  button.add-cart {
+    padding: 12px 32px;
+    background: linear-gradient(45deg, #c9184a, #ff4d6d);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 7px 20px rgba(201, 24, 74, 0.5);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+  }
+  button.add-cart:hover {
+    background: linear-gradient(45deg, #ff4d6d, #c9184a);
+    box-shadow: 0 10px 30px rgba(255, 77, 109, 0.7);
+  }
+
+  /* Suggestion box */
+  #suggestion {
+    max-width: 700px;
+    margin: 40px auto 60px;
+    background: white;
+    padding: 24px 32px;
+    border-radius: 50px;
+    box-shadow: 0 14px 30px rgba(201, 24, 74, 0.15);
+    color: #a31243;
+    font-weight: 700;
+    font-size: 1.15rem;
+    text-align: center;
+  }
+  #suggestion h3 {
+    margin-top: 0;
+    margin-bottom: 14px;
+    color: #c9184a;
+  }
+  #suggestion p {
+    margin: 6px 0;
+  }
+
+  /* Responsive font scaling */
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.8rem;
+      padding: 16px 0;
+    }
+    .product-card img {
+      width: 110px;
+      height: 110px;
+      margin-bottom: 12px;
+    }
+    .product-name {
+      font-size: 1rem;
+    }
+    .price {
+      font-size: 1rem;
+    }
+    button.add-cart, #backButton {
+      padding: 10px 24px;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <h1>Footwear Collection</h1>
+  <button id="backButton" onclick="window.location.href='categories.html'">⬅ Back to Categories</button>
+  <a href="cart.html" class="cart-btn">🛒 Cart</a>
+
+  <div class="grid-container" id="productGrid"></div>
+  <div id="suggestion"></div>
+
+  <script>
+    const marketplaces = ['amazon', 'ajio', 'flipkart', 'myntra'];
+
+    const products = [
+      {
+        name: "Shoes",
+        img: "https://www.bing.com/th?id=OPAC.PXSJRZCyDxjpDg474C474&o=5&pid=21.1&w=160&h=205&rs=1&qlt=100&dpr=1.5&pcl=f5f5f5",
+        prices: { amazon: 1799, ajio: 1899, flipkart: 1850, myntra: 1825 },
+        ratings: { amazon: 4.2, ajio: 4.0, flipkart: 4.1, myntra: 4.15 }
+      },
+      {
+        name: "Slipper",
+        img: "https://th.bing.com/th/id/OIP.Uzp-fVMHdBIJ9ktgclPO2gHaHa?w=175&h=180",
+        prices: { amazon: 299, ajio: 280, flipkart: 310, myntra: 295 },
+        ratings: { amazon: 4.0, ajio: 3.9, flipkart: 3.95, myntra: 4.1 }
+      },
+      {
+        name: "Crocs",
+        img: "https://th.bing.com/th/id/OIP.vg_tystQr_MyN0ykyQuAawHaHa?w=175&h=180",
+        prices: { amazon: 999, ajio: 1020, flipkart: 980, myntra: 1005 },
+        ratings: { amazon: 4.4, ajio: 4.3, flipkart: 4.45, myntra: 4.35 }
+      },
+      {
+        name: "Boots",
+        img: "https://th.bing.com/th/id/OIP.Fye5CqVqwKnHyA6ubDvm0gHaHa?w=205&h=205",
+        prices: { amazon: 2299, ajio: 2399, flipkart: 2250, myntra: 2280 },
+        ratings: { amazon: 4.3, ajio: 4.1, flipkart: 4.25, myntra: 4.2 }
+      },
+      {
+        name: "Heels",
+        img: "https://th.bing.com/th/id/OIP.YJ0YnbkJ5hJH2M_hK83qBAHaJQ?w=150&h=188",
+        prices: { amazon: 1099, ajio: 1140, flipkart: 1100, myntra: 1125 },
+        ratings: { amazon: 3.9, ajio: 3.8, flipkart: 3.85, myntra: 3.95 }
+      },
+      {
+        name: "Sneakers",
+        img: "https://th.bing.com/th/id/OIP.hQQdhB5HJp_smdmKTVRctwHaE8?w=361&h=197&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 2799, ajio: 2899, flipkart: 2750, myntra: 2800 },
+        ratings: { amazon: 4.5, ajio: 4.4, flipkart: 4.35, myntra: 4.45 }
+      },
+      {
+        name: "Sandals",
+        img: "https://th.bing.com/th/id/OIP.v97F1Cae0VMOWvNBVvSVpQHaHa?w=181&h=181&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 499, ajio: 480, flipkart: 520, myntra: 510 },
+        ratings: { amazon: 4.1, ajio: 4.0, flipkart: 4.05, myntra: 4.15 }
+      },
+      {
+        name: "Formal Shoes",
+        img: "https://th.bing.com/th/id/OIP.WY7pVHddHXuzfUH_ajfEcQHaHa?w=197&h=197&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 3199, ajio: 3300, flipkart: 3150, myntra: 3200 },
+        ratings: { amazon: 4.3, ajio: 4.2, flipkart: 4.25, myntra: 4.3 }
+      },
+      {
+        name: "Flip Flops",
+        img: "https://ts2.mm.bing.net/th?id=OIP.YlqTOgcyGpqVBxGQmdJ-oAHaDt&pid=15.1",
+        prices: { amazon: 199, ajio: 210, flipkart: 180, myntra: 185 },
+        ratings: { amazon: 3.8, ajio: 3.7, flipkart: 3.85, myntra: 3.75 }
+      },
+      {
+        name: "Moccasins",
+        img: "https://th.bing.com/th/id/OIP._BfvH4tdoY_mfRqxCpvQ-AAAAA?w=324&h=192&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 1399, ajio: 1400, flipkart: 1350, myntra: 1375 },
+        ratings: { amazon: 4.2, ajio: 4.15, flipkart: 4.1, myntra: 4.25 }
+      },
+      {
+        name: "Sandal",
+        img: "https://th.bing.com/th/id/OIP.1La4rpEiiGcfCcqAFa3fEQHaJ4?w=152&h=202&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 1399, ajio: 1400, flipkart: 1350, myntra: 1375 },
+        ratings: { amazon: 4.2, ajio: 4.15, flipkart: 4.1, myntra: 4.25 }
+      },
+      {
+        name: "Pencil heel",
+        img: "https://th.bing.com/th/id/OIP.D8ZD8M9WsnS13onPJETMygHaHa?w=191&h=192&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 2000, ajio: 1790, flipkart: 1950, myntra: 2075 },
+        ratings: { amazon: 4, ajio: 4.5, flipkart: 4, myntra: 4.5 }
+      }
+
+
+    ];
+
+    const grid = document.getElementById("productGrid");
+
+    function getSuggestedMarketplace(product) {
+      let bestMarket = marketplaces[0];
+      let bestScore = product.ratings[bestMarket] / product.prices[bestMarket];
+      marketplaces.forEach(market => {
+        const score = product.ratings[market] / product.prices[market];
+        if(score > bestScore) {
+          bestScore = score;
+          bestMarket = market;
+        }
+      });
+      return bestMarket;
+    }
+
+    products.forEach((product, index) => {
+      const suggestedMarket = getSuggestedMarketplace(product);
+      const card = document.createElement("div");
+      card.className = "product-card";
+      const defaultMarketplace = 'amazon';
+      card.innerHTML = `
+        <img src="${product.img}" alt="${product.name}" />
+        <div class="product-name">${product.name}</div>
+        <div class="price" id="price-${index}">₹${product.prices[defaultMarketplace]}</div>
+        <div class="rating" id="rating-${index}">⭐ ${product.ratings[defaultMarketplace]}</div>
+        <div class="suggested">Suggested: ${suggestedMarket.charAt(0).toUpperCase() + suggestedMarket.slice(1)}</div>
+        <select class="marketplace" id="marketplace-${index}">
+          ${marketplaces.map(market => 
+            `<option value="${market}">${market.charAt(0).toUpperCase() + market.slice(1)}</option>`
+          ).join('')}
+        </select>
+        <button class="add-cart" id="addCart-${index}">Add to Cart</button>
+      `;
+      grid.appendChild(card);
+
+      const select = card.querySelector(`#marketplace-${index}`);
+      const priceDiv = card.querySelector(`#price-${index}`);
+      const ratingDiv = card.querySelector(`#rating-${index}`);
+
+      select.addEventListener('change', () => {
+        const selectedMarket = select.value;
+        priceDiv.textContent = `₹${product.prices[selectedMarket]}`;
+        ratingDiv.textContent = `⭐ ${product.ratings[selectedMarket]}`;
+      });
+
+      const addCartBtn = card.querySelector(`#addCart-${index}`);
+
+      addCartBtn.addEventListener('click', () => {
+        const selectedMarket = select.value;
+        const price = product.prices[selectedMarket];
+        let cart = JSON.parse(localStorage.getItem('ingeniousMartCart')) || [];
+        const existingIndex = cart.findIndex(item => item.name === product.name && item.marketplace === selectedMarket);
+        if(existingIndex !== -1) {
+          cart[existingIndex].qty += 1;
+        } else {
+          cart.push({
+            name: product.name,
+            marketplace: selectedMarket,
+            price,
+            qty: 1
+          });
+        }
+        localStorage.setItem('ingeniousMartCart', JSON.stringify(cart));
+        alert(`${product.name} (${selectedMarket.charAt(0).toUpperCase() + selectedMarket.slice(1)}) added to cart!`);
+      });
+    });
+
+    function showSuggestion() {
+      const cheapest = products.reduce((a, b) => a.prices.amazon < b.prices.amazon ? a : b);
+      const highestRated = products.reduce((a, b) => a.ratings.amazon > b.ratings.amazon ? a : b);
+      const bestValue = products.reduce((a, b) => 
+        (a.ratings.amazon / a.prices.amazon) > (b.ratings.amazon / b.prices.amazon) ? a : b
+      );
+
+      const suggestionBox = document.getElementById('suggestion');
+      suggestionBox.innerHTML = `
+        <div><strong>Cheapest (Amazon):</strong> ${cheapest.name} - ₹${cheapest.prices.amazon}</div>
+        <div><strong>Highest Rated (Amazon):</strong> ${highestRated.name} - ⭐${highestRated.ratings.amazon}</div>
+        <div><strong>Best Value (Amazon):</strong> ${bestValue.name} - Rating/Price Ratio: ${(bestValue.ratings.amazon / bestValue.prices.amazon).toFixed(4)}</div>
+      `;
+    }
+
+    showSuggestion();
+
+    document.getElementById('backButton').addEventListener('click', () => {
+      window.location.href = 'categories.html';
+    });
+  </script>
+</body>

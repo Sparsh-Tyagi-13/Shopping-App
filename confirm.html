@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Order Confirmation - Ingenious Mart</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fffafc;
+      padding: 20px;
+      text-align: center;
+    }
+    .box {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #fff0f5;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #d94f8b;
+    }
+    p {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+    .btn-home {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #d94f8b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .btn-home:hover {
+      background-color: #c73874;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h1>Thank You for Your Order!</h1>
+  <p id="userName"></p>
+  <p id="userAddress"></p>
+  <p id="userPhone"></p>
+  <p>Your order will be delivered soon. Stay tuned!</p>
+  <button class="btn-home" onclick="window.location.href='index.html'">Back to Home</button>
+</div>
+
+<script>
+  const deliveryInfo = JSON.parse(localStorage.getItem("deliveryInfo"));
+
+  if (deliveryInfo) {
+    document.getElementById("userName").textContent = `Name: ${deliveryInfo.name}`;
+    document.getElementById("userAddress").textContent = `Address: ${deliveryInfo.address}`;
+    document.getElementById("userPhone").textContent = `Phone: ${deliveryInfo.phone}`;
+  } else {
+    document.querySelector(".box").innerHTML = "<h1>Oops!</h1><p>No order found.</p>";
+  }
+</script>
+
+</body>
+</html>

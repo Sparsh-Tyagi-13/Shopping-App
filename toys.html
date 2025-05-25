@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Toys Collection - Ingenious Mart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff0f5;
+      margin: 0; padding: 0;
+    }
+    h1 {
+      text-align: center;
+      background-color: #d94f8b;
+      color: white;
+      padding: 20px 0;
+      margin: 0;
+      font-weight: 600;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+      padding: 30px;
+    }
+    .product-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .product-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+    .product-name {
+      font-weight: bold;
+      font-size: 16px;
+      color: #333;
+      text-transform: capitalize;
+    }
+    .price {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #444;
+    }
+    .rating {
+      font-size: 14px;
+      color: #777;
+      margin-top: 5px;
+    }
+    .suggested {
+      margin-top: 8px;
+      font-weight: 600;
+      color: #d94f8b;
+    }
+    select.marketplace {
+      margin-top: 10px;
+      padding: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    button.add-cart {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background-color: #d94f8b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+.cart-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #d94f8b;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: background-color 0.3s;
+  z-index: 1000;
+}
+
+.cart-btn:hover {
+  background-color: #b03b6f;
+}
+    button.add-cart:hover {
+      background-color: #b03966;
+    }
+    #suggestion {
+      max-width: 600px;
+      margin: 30px auto;
+      background: #ffd1dc;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #ffb6c1;
+      text-align: center;
+      font-size: 18px;
+      color: #a80044;
+    }
+  </style>
+</head>
+<body>
+  <h1>Toys Collection</h1>
+  <div class="grid-container" id="productGrid"></div>
+  <div id="suggestion"></div>
+  <a href="cart.html" class="cart-btn" title="Go to Cart">
+  🛒 Cart
+</a>
+
+  <script>
+    const marketplaces = ['amazon', 'ajio', 'flipkart', 'myntra'];
+
+    const products = [
+      {
+        name: "Teddy",
+        img: "https://th.bing.com/th/id/OIP.uwo4rQMNmBGfApZFvBFimwHaHa?w=203&h=203&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 1799, ajio: 1899, flipkart: 1850, myntra: 1825 },
+        ratings: { amazon: 4.2, ajio: 4.0, flipkart: 4.1, myntra: 4.15 }
+      },
+      {
+        name: "Soft Toy",
+        img: "https://th.bing.com/th/id/OIP.cjb4z3GHcPH2_ZfYVs7l_wHaHa?w=153&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 299, ajio: 280, flipkart: 310, myntra: 295 },
+        ratings: { amazon: 4.0, ajio: 3.9, flipkart: 3.95, myntra: 4.1 }
+      },
+      {
+        name: "Barbie",
+        img: "https://th.bing.com/th/id/OIP.iAs4yyD5FuMdlj5VXsqtrwAAAA?w=248&h=186&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 999, ajio: 1020, flipkart: 980, myntra: 1005 },
+        ratings: { amazon: 4.4, ajio: 4.3, flipkart: 4.45, myntra: 4.35 }
+      },
+      {
+        name: "Ludo",
+        img: "https://images.sftcdn.net/images/t_app-cover-l,f_auto/p/8b019894-3788-4cb4-b61c-74676d6558b9/30740955/ludo-money-ludo-scratch-card-screenshot.png",
+        prices: { amazon: 1200, ajio: 1250, flipkart: 1150, myntra: 1195 },
+        ratings: { amazon: 4.6, ajio: 4.5, flipkart: 4.7, myntra: 4.65 }
+      },
+      {
+        name: "Sudoku",
+        img: "https://th.bing.com/th/id/OIP.xqfd9N2PJJx4ACSpk-9K_AHaHl?w=159&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 499, ajio: 520, flipkart: 480, myntra: 495 },
+        ratings: { amazon: 4.1, ajio: 4.0, flipkart: 4.15, myntra: 4.05 }
+      },
+      {
+        name: "Tennis",
+        img: "https://th.bing.com/th/id/OIP.3D9Bne9YNxa3s60fi7P6RAHaHd?w=179&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 399, ajio: 420, flipkart: 380, myntra: 395 },
+        ratings: { amazon: 4.3, ajio: 4.25, flipkart: 4.2, myntra: 4.15 }
+      },
+      {
+        name: "Snake and Ladder",
+        img: "https://th.bing.com/th/id/OIP.v5ckjC6NWB4lxk9WNl-38wHaFj?w=264&h=198&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 199, ajio: 210, flipkart: 195, myntra: 205 },
+        ratings: { amazon: 4.0, ajio: 3.95, flipkart: 4.05, myntra: 4.0 }
+      },
+      {
+        name: "Rubik's Cube",
+        img: "https://th.bing.com/th/id/OIP.1g2kNqk0SEp30-NcgtpZlQHaHX?w=201&h=200&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 199, ajio: 210, flipkart: 195, myntra: 205 },
+        ratings: { amazon: 4.0, ajio: 3.95, flipkart: 4.05, myntra: 4.0 }
+      },
+      {
+        name: "Chess",
+        img: "https://ts1.mm.bing.net/th?id=OIP.O_tqic70G8e0AVs76jPWkQHaHa&pid=15.1",
+        prices: { amazon: 199, ajio: 210, flipkart: 195, myntra: 205 },
+        ratings: { amazon: 4.0, ajio: 3.95, flipkart: 4.05, myntra: 4.0 }
+      },
+      {
+        name: "Spiderman",
+        img: "https://th.bing.com/th/id/OIP.J427oUDtAJ_Ol2ING6UJEwHaJ4?w=66&h=66&c=1&rs=1&qlt=90&r=0&dpr=1.5&pid=InlineBlock",
+        prices: { amazon: 299, ajio: 310, flipkart: 290, myntra: 305 },
+        ratings: { amazon: 4.2, ajio: 4.15, flipkart: 4.1, myntra: 4.2 }
+      }
+    ];
+
+    const grid = document.getElementById("productGrid");
+
+    // Calculate best marketplace by rating/price ratio
+    function getSuggestedMarketplace(product) {
+      let bestMarket = marketplaces[0];
+      let bestScore = product.ratings[bestMarket] / product.prices[bestMarket];
+      for (const market of marketplaces) {
+        const score = product.ratings[market] / product.prices[market];
+        if (score > bestScore) {
+          bestScore = score;
+          bestMarket = market;
+        }
+      }
+      return bestMarket;
+    }
+
+    // Create product cards
+    products.forEach((product, index) => {
+      const suggestedMarket = getSuggestedMarketplace(product);
+      const defaultMarket = 'amazon';
+
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <img src="${product.img}" alt="${product.name}" />
+        <div class="product-name">${product.name}</div>
+        <div class="price" id="price-${index}">₹${product.prices[defaultMarket]}</div>
+        <div class="rating" id="rating-${index}">⭐ ${product.ratings[defaultMarket]}</div>
+        <div class="suggested">Suggested: ${suggestedMarket.charAt(0).toUpperCase() + suggestedMarket.slice(1)}</div>
+        <select class="marketplace" id="marketplace-${index}">
+          ${marketplaces.map(m => `<option value="${m}">${m.charAt(0).toUpperCase() + m.slice(1)}</option>`).join('')}
+        </select>
+        <button class="add-cart" id="addCart-${index}">Add to Cart</button>
+      `;
+      grid.appendChild(card);
+
+      // Update price and rating when marketplace selection changes
+      const select = card.querySelector(`#marketplace-${index}`);
+      const priceDiv = card.querySelector(`#price-${index}`);
+      const ratingDiv = card.querySelector(`#rating-${index}`);
+
+      select.addEventListener('change', () => {
+        const selectedMarket = select.value;
+        priceDiv.textContent = `₹${product.prices[selectedMarket]}`;
+        ratingDiv.textContent = `⭐ ${product.ratings[selectedMarket]}`;
+      });
+
+      // Add to cart functionality
+      const addCartBtn = card.querySelector(`#addCart-${index}`);
+      addCartBtn.addEventListener('click', () => {
+        const selectedMarket = select.value;
+        const price = product.prices[selectedMarket];
+        let cart = JSON.parse(localStorage.getItem('ingeniousMartCart')) || [];
+
+        const existingIndex = cart.findIndex(item => item.name === product.name && item.marketplace === selectedMarket);
+        if (existingIndex !== -1) {
+          cart[existingIndex].qty += 1;
+        } else {
+          cart.push({ name: product.name, marketplace: selectedMarket, price, qty: 1 });
+        }
+        localStorage.setItem('ingeniousMartCart', JSON.stringify(cart));
+        alert(`${product.name} (${selectedMarket.charAt(0).toUpperCase() + selectedMarket.slice(1)}) added to cart!`);
+      });
+    });
+
+    // Display suggestion box with cheapest, highest rated, and best value products (based on Amazon data)
+    function showSuggestion() {
+      const suggestionBox = document.getElementById('suggestion');
+
+      const cheapest = products.reduce((min, p) => p.prices.amazon < min.prices.amazon ? p : min, products[0]);
+      const highestRated = products.reduce((max, p) => p.ratings.amazon > max.ratings.amazon ? p : max, products[0]);
+      const bestValue = products.reduce((best, p) => 
+        (p.ratings.amazon / p.prices.amazon) > (best.ratings.amazon / best.prices.amazon) ? p : best, products[0]);
+
+      suggestionBox.innerHTML = `
+        <strong>Cheapest Toy:</strong> ${cheapest.name} at ₹${cheapest.prices.amazon} <br />
+        <strong>Highest Rated Toy:</strong> ${highestRated.name} with ⭐ ${highestRated.ratings.amazon} <br />
+        <strong>Best Value Toy:</strong> ${bestValue.name} with rating/price ratio of ${(bestValue.ratings.amazon / bestValue.prices.amazon).toFixed(4)}
+      `;
+      suggestionBox.style.display = 'block';
+    }
+
+    showSuggestion();
+  </script>
+</body>
+</html>

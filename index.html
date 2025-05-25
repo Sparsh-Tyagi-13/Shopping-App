@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ingenious Mart - Navigate Online Shopping</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    /* Reset */
+    * {
+      margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: #f0f8f8;
+      color: #004d4d;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Navbar */
+    nav {
+      background-color: #008080;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 8px rgba(0, 128, 128, 0.4);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav .logo {
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.8rem;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      user-select: none;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+    nav ul li a {
+      color: #e0f2f1;
+      font-weight: 600;
+      font-size: 1rem;
+      border-bottom: 3px solid transparent;
+      transition: color 0.3s ease, border-bottom-color 0.3s ease;
+      text-decoration: none;
+    }
+    nav ul li a:hover,
+    nav ul li a.active {
+      color: #ff6f61;
+      border-bottom-color: #ff6f61;
+    }
+
+    /* Hero section */
+    .hero-section {
+      background: linear-gradient(rgba(0,128,128,0.7), rgba(0,77,77,0.7)),
+        url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1470&q=80') no-repeat center/cover;
+      color: #fff;
+      text-align: center;
+      padding: 6rem 1rem 5rem;
+      font-weight: 600;
+      user-select: none;
+    }
+    .hero-section h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: 2.5px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+    }
+    .hero-section p {
+      font-size: 1.3rem;
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 400;
+      color: #cce7e7;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+    .btn-primary {
+      background-color: #ff6f61;
+      color: #fff;
+      padding: 0.9rem 2.5rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 5px 15px #ff6f61aa;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      background-color: #e65b4f;
+      box-shadow: 0 8px 20px #e65b4fbb;
+    }
+
+    /* Features Section */
+    .features-section {
+      padding: 4rem 2rem 6rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      user-select: none;
+    }
+    .feature-card {
+      background: #ffffffdd;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      flex: 1 1 280px;
+      max-width: 320px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+    }
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    .feature-card img {
+      width: 80px;
+      margin-bottom: 1.25rem;
+      filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.15));
+    }
+    .feature-card h3 {
+      color: #008080;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+    .feature-card p {
+      color: #005050;
+      font-weight: 500;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #008080;
+      color: #e0f2f1;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-weight: 500;
+      font-size: 1rem;
+      letter-spacing: 0.6px;
+      user-select: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-section h1 {
+        font-size: 2.8rem;
+      }
+      .features-section {
+        flex-direction: column;
+        align-items: center;
+      }
+      .feature-card {
+        max-width: 90%;
+      }
+      nav ul {
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-section h1 {
+        font-size: 2rem;
+      }
+      .hero-section p {
+        font-size: 1rem;
+      }
+      .btn-primary {
+        font-size: 1rem;
+        padding: 0.8rem 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Ingenious Mart</div>
+    <ul>
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="categories.html">Categories</a></li>
+      <li><a href="#">Best Deals</a></li>
+      <li><a href="cart.html">Cart</a></li>
+
+    </ul>
+  </nav>
+
+  <header class="hero-section" data-aos="fade-down">
+    <h1>Shop Smart. Save More.</h1>
+    <p>Discover the best deals from Amazon, Flipkart, Myntra, and Ajio — all in one place.</p>
+    <a href="categories.html" class="btn-primary">Explore Categories</a>
+  </header>
+
+  <section class="features-section" data-aos="fade-up" data-aos-delay="200">
+    <div class="feature-card">
+      <img src="https://img.icons8.com/ios-filled/100/008080/shopping-cart.png" alt="Wide Selection" />
+      <h3>Wide Selection</h3>
+      <p>Explore thousands of products across multiple categories and stores.</p>
+    </div>
+    <div class="feature-card">
+      <img src="https://img.icons8.com/ios-filled/100/008080/discount.png" alt="Best Prices" />
+      <h3>Best Prices</h3>
+      <p>We compare prices and show you the cheapest and best-reviewed products.</p>
+    </div>
+    <div class="feature-card">
+      <img src="https://img.icons8.com/ios-filled/100/008080/speed.png" alt="Fast & Easy" />
+      <h3>Fast & Easy</h3>
+      <p>Seamless navigation and smooth experience on desktop and mobile.</p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Ingenious Mart. All rights reserved.
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true, duration: 900, easing: 'ease-in-out' });
+  </script>
+</body>
+</html>

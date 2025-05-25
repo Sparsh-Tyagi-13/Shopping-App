@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Footwear Collection - Ingenious Mart</title>
+<style>
+  /* Reset and base */
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff0f5; /* light pink background */
+    color: #3a0f2a; /* deep pinkish text */
+  }
+  h1 {
+    background-color: #c9184a;
+    color: white;
+    padding: 20px 0;
+    margin: 0;
+    font-weight: 700;
+    text-align: center;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 8px rgba(201, 24, 74, 0.4);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  /* Back button */
+  #backButton {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(45deg, #c9184a, #ff4d6d);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(201, 24, 74, 0.5);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    width: max-content;
+  }
+  #backButton:hover {
+    background: linear-gradient(45deg, #ff4d6d, #c9184a);
+    box-shadow: 0 7px 20px rgba(255, 77, 109, 0.6);
+  }
+
+  /* Cart button - same style as back button */
+  .cart-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(45deg, #c9184a, #ff4d6d);
+    color: white;
+    padding: 14px 30px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(201, 24, 74, 0.6);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1000;
+    user-select: none;
+  }
+  .cart-btn:hover {
+    background: linear-gradient(45deg, #ff4d6d, #c9184a);
+    box-shadow: 0 8px 26px rgba(255, 77, 109, 0.7);
+  }
+
+  /* Grid container for product cards */
+  .grid-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+
+  /* Product Card Style - matching buttons with pill shape and shadows */
+  .product-card {
+    background: white;
+    border-radius: 50px;
+    padding: 20px 24px;
+    box-shadow: 0 10px 20px rgba(201, 24, 74, 0.12);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .product-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 16px 32px rgba(255, 77, 109, 0.3);
+  }
+
+  /* Product image */
+  .product-card img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    border-radius: 50%;
+    margin-bottom: 16px;
+    box-shadow: 0 6px 12px rgba(201, 24, 74, 0.15);
+  }
+
+  /* Product name */
+  .product-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #8b0049;
+  }
+
+  /* Price & rating */
+  .price {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #c9184a;
+    margin-bottom: 6px;
+  }
+  .rating {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ff4d6d;
+    margin-bottom: 12px;
+  }
+
+  /* Suggested marketplace label */
+  .suggested {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #ff6f91;
+    margin-bottom: 14px;
+  }
+
+  /* Marketplace selector */
+  select.marketplace {
+    padding: 8px 12px;
+    border-radius: 50px;
+    border: 2px solid #ff4d6d;
+    background: #fff0f5;
+    font-weight: 600;
+    color: #8b0049;
+    outline: none;
+    margin-bottom: 16px;
+    cursor: pointer;
+    width: 80%;
+    transition: border-color 0.3s ease;
+  }
+  select.marketplace:hover, select.marketplace:focus {
+    border-color: #c9184a;
+  }
+
+  /* Add to Cart button */
+  button.add-cart {
+    padding: 12px 32px;
+    background: linear-gradient(45deg, #c9184a, #ff4d6d);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 7px 20px rgba(201, 24, 74, 0.5);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+  }
+  button.add-cart:hover {
+    background: linear-gradient(45deg, #ff4d6d, #c9184a);
+    box-shadow: 0 10px 30px rgba(255, 77, 109, 0.7);
+  }
+
+  /* Suggestion box */
+  #suggestion {
+    max-width: 700px;
+    margin: 40px auto 60px;
+    background: white;
+    padding: 24px 32px;
+    border-radius: 50px;
+    box-shadow: 0 14px 30px rgba(201, 24, 74, 0.15);
+    color: #a31243;
+    font-weight: 700;
+    font-size: 1.15rem;
+    text-align: center;
+  }
+  #suggestion h3 {
+    margin-top: 0;
+    margin-bottom: 14px;
+    color: #c9184a;
+  }
+  #suggestion p {
+    margin: 6px 0;
+  }
+
+  /* Responsive font scaling */
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.8rem;
+      padding: 16px 0;
+    }
+    .product-card img {
+      width: 110px;
+      height: 110px;
+      margin-bottom: 12px;
+    }
+    .product-name {
+      font-size: 1rem;
+    }
+    .price {
+      font-size: 1rem;
+    }
+    button.add-cart, #backButton {
+      padding: 10px 24px;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <h1>Cosmetic Collection </h1>
+  <button id="backButton" onclick="window.location.href='categories.html'">⬅ Back to Categories</button>
+  <a href="cart.html" class="cart-btn">🛒 Cart</a>
+
+  <div class="grid-container" id="productGrid"></div>
+  <div id="suggestion"></div>
+</style>
+</head>
+<body>
+
+  <h1>Cosmetic Collection</h1>
+  <div class="grid-container" id="productGrid"></div>
+  <div id="suggestion"></div>
+  <a href="cart.html" class="cart-btn" title="Go to Cart">
+  🛒 Cart
+</a>
+
+
+  <script>
+    const marketplaces = ['amazon', 'ajio', 'flipkart', 'myntra'];
+
+    const products = [
+      {
+        name: "Lipstick",
+        img: "https://th.bing.com/th/id/OIP.lS4z6KXN2QC_IGFkR1mTDwHaHa?w=192&h=192&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 799, ajio: 899, flipkart: 850, myntra: 825 },
+        ratings: { amazon: 4, ajio: 4.0, flipkart: 4, myntra: 4.5 }
+      },
+      {
+        name: "Primer",
+        img: "https://th.bing.com/th/id/OIP.i_TWB3wlSaiZLJa9HEkNoQHaHa?w=172&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 299, ajio: 280, flipkart: 310, myntra: 295 },
+        ratings: { amazon: 4.0, ajio: 3.9, flipkart: 3.95, myntra: 4.1 }
+      },
+      {
+        name: "Foundation",
+        img: "https://th.bing.com/th/id/OIP.456D1qb0NDEr9SXLSod0WAHaEK?w=308&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 999, ajio: 1020, flipkart: 980, myntra: 1005 },
+        ratings: { amazon: 4.4, ajio: 4.3, flipkart: 4.45, myntra: 4.35 }
+      },
+      {
+        name: "Blush",
+        img: "https://th.bing.com/th/id/OIP.Y5BaZy52tCW1NW5cdD7c0gHaHF?w=197&h=189&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 1200, ajio: 1250, flipkart: 1150, myntra: 1195 },
+        ratings: { amazon: 4.6, ajio: 4.5, flipkart: 4.7, myntra: 4.65 }
+      },
+      {
+        name: "Eye Liner",
+        img: "https://th.bing.com/th/id/OIP.TKhrROJjnHBmaU9Q6sajHwHaHa?w=189&h=189&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 499, ajio: 520, flipkart: 480, myntra: 495 },
+        ratings: { amazon: 4.1, ajio: 4.0, flipkart: 4.15, myntra: 4.05 }
+      },
+      {
+        name: "Mascara",
+        img: "https://th.bing.com/th/id/OIP.rtt9IPCZ4wPIRyv9z3b3pwHaHa?w=177&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 399, ajio: 420, flipkart: 380, myntra: 395 },
+        ratings: { amazon: 4.3, ajio: 4.25, flipkart: 4.2, myntra: 4.15 }
+      },
+      {
+        name: "Makeuo Remover",
+        img: "https://th.bing.com/th/id/OIP.WXHmW27fEGE-n1f0DlxaMgHaHa?w=187&h=187&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 199, ajio: 210, flipkart: 195, myntra: 205 },
+        ratings: { amazon: 4.0, ajio: 3.95, flipkart: 4.05, myntra: 4.0 }
+      },
+      {
+        name: "Lipbalm",
+        img: "https://ts2.mm.bing.net/th?id=OIP.EzALtYXSsuuiSb50Rm85vAHaHa&pid=15.1",
+        prices: { amazon: 199, ajio: 210, flipkart: 195, myntra: 205 },
+        ratings: { amazon: 4.0, ajio: 3.95, flipkart: 4.05, myntra: 4.0 }
+      },
+      {
+        name: "Brushes",
+        img: "https://th.bing.com/th/id/OIP.HQwkD3tC5Bi-WrOfspDkYAHaHa?w=212&h=212&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 199, ajio: 210, flipkart: 195, myntra: 205 },
+        ratings: { amazon: 4.0, ajio: 3.95, flipkart: 4.05, myntra: 4.0 }
+      },
+      {
+        name: "Eyeshadow",
+        img: "https://th.bing.com/th/id/OIP.9Rzb8j32GEXofK11A8z9cAHaE8?w=284&h=189&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+        prices: { amazon: 299, ajio: 310, flipkart: 290, myntra: 305 },
+        ratings: { amazon: 4.2, ajio: 4.15, flipkart: 4.1, myntra: 4.2 }
+      }
+    ];
+     
+
+    const grid = document.getElementById("productGrid");
+
+    // Calculate best marketplace by rating/price ratio
+    function getSuggestedMarketplace(product) {
+      let bestMarket = marketplaces[0];
+      let bestScore = product.ratings[bestMarket] / product.prices[bestMarket];
+      for (const market of marketplaces) {
+        const score = product.ratings[market] / product.prices[market];
+        if (score > bestScore) {
+          bestScore = score;
+          bestMarket = market;
+        }
+      }
+      return bestMarket;
+    }
+
+    // Create product cards
+    products.forEach((product, index) => {
+      const suggestedMarket = getSuggestedMarketplace(product);
+      const defaultMarket = 'amazon';
+
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <img src="${product.img}" alt="${product.name}" />
+        <div class="product-name">${product.name}</div>
+        <div class="price" id="price-${index}">₹${product.prices[defaultMarket]}</div>
+        <div class="rating" id="rating-${index}">⭐ ${product.ratings[defaultMarket]}</div>
+        <div class="suggested">Suggested: ${suggestedMarket.charAt(0).toUpperCase() + suggestedMarket.slice(1)}</div>
+        <select class="marketplace" id="marketplace-${index}">
+          ${marketplaces.map(m => `<option value="${m}">${m.charAt(0).toUpperCase() + m.slice(1)}</option>`).join('')}
+        </select>
+        <button class="add-cart" id="addCart-${index}">Add to Cart</button>
+      `;
+      grid.appendChild(card);
+
+      // Update price and rating when marketplace selection changes
+      const select = card.querySelector(`#marketplace-${index}`);
+      const priceDiv = card.querySelector(`#price-${index}`);
+      const ratingDiv = card.querySelector(`#rating-${index}`);
+
+      select.addEventListener('change', () => {
+        const selectedMarket = select.value;
+        priceDiv.textContent = `₹${product.prices[selectedMarket]}`;
+        ratingDiv.textContent = `⭐ ${product.ratings[selectedMarket]}`;
+      });
+
+      // Add to cart functionality
+      const addCartBtn = card.querySelector(`#addCart-${index}`);
+      addCartBtn.addEventListener('click', () => {
+        const selectedMarket = select.value;
+        const price = product.prices[selectedMarket];
+        let cart = JSON.parse(localStorage.getItem('ingeniousMartCart')) || [];
+
+        const existingIndex = cart.findIndex(item => item.name === product.name && item.marketplace === selectedMarket);
+        if (existingIndex !== -1) {
+          cart[existingIndex].qty += 1;
+        } else {
+          cart.push({ name: product.name, marketplace: selectedMarket, price, qty: 1 });
+        }
+        localStorage.setItem('ingeniousMartCart', JSON.stringify(cart));
+        alert(`${product.name} (${selectedMarket.charAt(0).toUpperCase() + selectedMarket.slice(1)}) added to cart!`);
+      });
+    });
+
+    // Display suggestion box with cheapest, highest rated, and best value products (based on Amazon data)
+    function showSuggestion() {
+      const suggestionBox = document.getElementById('suggestion');
+
+      const cheapest = products.reduce((min, p) => p.prices.amazon < min.prices.amazon ? p : min, products[0]);
+      const highestRated = products.reduce((max, p) => p.ratings.amazon > max.ratings.amazon ? p : max, products[0]);
+      const bestValue = products.reduce((best, p) => 
+        (p.ratings.amazon / p.prices.amazon) > (best.ratings.amazon / best.prices.amazon) ? p : best, products[0]);
+
+      suggestionBox.innerHTML = `
+        <strong>Cheapest Toy:</strong> ${cheapest.name} at ₹${cheapest.prices.amazon} <br />
+        <strong>Highest Rated Toy:</strong> ${highestRated.name} with ⭐ ${highestRated.ratings.amazon} <br />
+        <strong>Best Value Toy:</strong> ${bestValue.name} with rating/price ratio of ${(bestValue.ratings.amazon / bestValue.prices.amazon).toFixed(4)}
+      `;
+      suggestionBox.style.display = 'block';
+    }
+
+    showSuggestion();
+  </script>
+</body>
+</html>
+
